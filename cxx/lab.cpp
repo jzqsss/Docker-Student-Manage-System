@@ -34,23 +34,12 @@ string exec(string command) {
 }
 
 int main(int argc,char *argv[]){
-    argparse::ArgumentParser program("program_name");
+    argparse::ArgumentParser program("lab");
     
-    program.add_argument("student_id");
+    program.add_argument("action");
     
     program.add_argument("--lab");
-    
-    program.add_argument("--ls")
-      .default_value(false)
-      .implicit_value(true);
-    
-    program.add_argument("--start")
-      .default_value(false)
-      .implicit_value(true);
-    
-    program.add_argument("--stop")
-      .default_value(false)
-      .implicit_value(true);
+    program.add_argument("--image");
   
     try {
       program.parse_args(argc, argv);
@@ -60,35 +49,29 @@ int main(int argc,char *argv[]){
       std::cerr << program;
       std::exit(1);
     }
-    
-    string lab_id;
-    if (program["--start"] == true)
-    {
-         lab_id = program.get<std::string>("--lab");
-    }
 
-    auto student_id = program.get<std::string>("student_id");
-    
-    if (program["--ls"] == true) 
-    {
-        string input = "docker container ls -f name=" + student_id + " -a";
+    auto action = program.get<std::string>("action");
+
+    if (action == "ls") {
+        auto lab = program.get<std::string>("--lab");
+
+        string input = "docker container ls -f name=" + lab + " -a";
         string result = exec(input);
         cout << result;
-    }
-    else if(program["--start"] == true)
-    {
-        string input = "docker run -itd --name " + student_id + " " + lab_id;
+    } else if (action == "start") {
+        auto lab = program.get<std::string>("--lab");
+        auto image = program.get<std::string>("--image");
+
+        string input = "docker run -itd --name " + lab + " " + image;
         string result = exec(input);
         cout << result;
-    }
-    else if(program["--stop"] == true)
-    {
-        string input = "docker stop " + student_id;
+    } else if (action == "stop") {
+        auto lab = program.get<std::string>("--lab");
+        
+        string input = "docker stop " + lab;
         string result = exec(input);
         cout << result;
-    }
-    else
-    {
+    } else {
         cout << "请输入正确的参数";
         return 0;
     }

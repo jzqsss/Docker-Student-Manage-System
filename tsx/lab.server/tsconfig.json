@@ -1,0 +1,24 @@
+{
+   "compilerOptions": {
+      "target": "ES2019",
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "lib": ["dom"],
+      "declaration": true,
+      "rootDir": "./src",
+      "outDir": "./build",
+      "strict": true,
+      "esModuleInterop": true,
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "sourceMap": true,
+      "allowJs": true
+   },
+   "include": [
+      "src"
+   ],
+   "exclude": [
+      "node_modules",
+      "build"
+   ]
+}
