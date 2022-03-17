@@ -20,7 +20,7 @@ export class App extends Component<any, AppState> {
     render(): ReactNode {
         return (
             <div>
-                <button onclick={async () => {
+                <button onClick={async () => {
                     await LabClient.ls("lab1");
                 }}/>
             </div>

@@ -13,7 +13,7 @@ export class LabClient {
   ): Promise<{ 
     out: string;
    }> {
-    let url = "https://localhost:8080/ls";
+    let url = "https://localhost:8085/ls";
 
     let response = await request.post(url).type("form").send({
       lab: lab,
@@ -28,7 +28,7 @@ export class LabClient {
   ): Promise<{ 
     out: string;
    }> {
-    let url = "https://localhost:8080/start";
+    let url = "https://localhost:8085/start";
 
     let response = await request.post(url).type("form").send({
       lab: lab,
@@ -43,7 +43,7 @@ export class LabClient {
   ): Promise<{ 
     out: string;
    }> {
-    let url = "https://localhost:8080/stop";
+    let url = "https://localhost:8085/stop";
 
     let response = await request.post(url).type("form").send({
       lab: lab,

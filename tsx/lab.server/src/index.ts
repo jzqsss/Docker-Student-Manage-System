@@ -26,4 +26,4 @@ export class Server {
     }
 }
 
-Server.listen(8080);
+Server.listen(8085);
