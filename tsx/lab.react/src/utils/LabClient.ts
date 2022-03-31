@@ -13,12 +13,10 @@ export class LabClient {
   ): Promise<{ 
     out: string;
    }> {
-    let url = "https://localhost:8085/ls";
-
+    let url = "http://localhost:8085/ls";
     let response = await request.post(url).type("form").send({
       lab: lab,
     });
-
     return response.body ?? response.text;
   }
 
@@ -28,13 +26,11 @@ export class LabClient {
   ): Promise<{ 
     out: string;
    }> {
-    let url = "https://localhost:8085/start";
-
+    let url = "http://localhost:8085/start";
     let response = await request.post(url).type("form").send({
       lab: lab,
       image: image,
     });
-
     return response.body ?? response.text;
   }
 
@@ -43,12 +39,10 @@ export class LabClient {
   ): Promise<{ 
     out: string;
    }> {
-    let url = "https://localhost:8085/stop";
-
+    let url = "http://localhost:8085/stop";
     let response = await request.post(url).type("form").send({
       lab: lab,
     });
-
     return response.body ?? response.text;
   }
 }

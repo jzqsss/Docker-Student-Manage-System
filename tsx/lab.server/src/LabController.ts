@@ -6,7 +6,8 @@ export class LabController implements Controller {
     private async ls(lab: string): Promise<{ 
         out: string;
      }> {
-        let cmd = "../../cxx/lab ls --lab=" + lab;
+        console.log("lab:" + lab);
+        let cmd = "../../cxx/lab ls --lab " + lab;
 
         let { stdout } = exec(cmd);
 
@@ -18,7 +19,7 @@ export class LabController implements Controller {
     private async start(lab: string, image: string): Promise<{ 
         out: string;
      }> {
-        let cmd = "../../cxx/lab start --lab=" + lab + " --image=" + image;
+        let cmd = "../../cxx/lab start --lab " + lab + " --image " + image;
 
         let { stdout } = exec(cmd);
 
@@ -30,7 +31,7 @@ export class LabController implements Controller {
     private async stop(lab: string): Promise<{ 
         out: string;
      }> {
-        let cmd = "../../cxx/lab stop --lab=" + lab;
+        let cmd = "../../cxx/lab stop --lab " + lab;
 
         let { stdout } = exec(cmd);
 
@@ -58,4 +59,4 @@ export class LabController implements Controller {
     }
 }
 
-// localhost:8080/start
+// localhost:8085/start
