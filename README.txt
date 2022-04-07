@@ -17,3 +17,4 @@ cd tsx/lab.react && yarn && cd ../..
 
 cd tsx/lab.server && yarn run start
 cd tsx/lab.react && yarn run start
+test
