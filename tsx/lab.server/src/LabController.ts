@@ -2,6 +2,7 @@ import express from "express";
 import { Controller } from "./Controller";
 import { exec } from "shelljs";
 import { login } from "./controllers/auth.js";
+import { protect } from "./middleware/auth.js";
 export class LabController implements Controller {
     private async ls(lab: string): Promise<{
         out: string;
@@ -60,6 +61,11 @@ export class LabController implements Controller {
             return res.send(result);
         });
         app.post(`/api/auth/login`, login);
+        app.get(`/api/private`, protect, (req, res) => {
+            res.status(200).json({
+                success: true,
+            });
+        });
     }
 }
 

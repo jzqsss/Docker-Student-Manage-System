@@ -7,18 +7,21 @@
 import { Component, ReactNode } from 'react';
 import { AppState } from './AppState';
 import { LabClient } from './utils/LabClient';
+// Routing
+import PrivateRoute from "./components/routing/PrivateRoute";
 
+// Screens
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import LoginScreen from "./components/screens/LoginScreen";
-
+import PrivateScreen from "./components/screens/PrivateScreen";
 const App = () => {
     return (
         <Router>
             <div className="app">
                 <Switch>
-                   
-                    <Route exact path="/" component={LoginScreen} />
-                 
+                    <PrivateRoute exact path="/" component={PrivateScreen} />
+                    <Route exact path="/login" component={LoginScreen} />
+
                 </Switch>
             </div>
         </Router>

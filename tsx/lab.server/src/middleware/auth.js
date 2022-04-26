@@ -3,7 +3,7 @@ import User from "../models/User.js";
 import ErrorResponse from "../utils/errorResponse.js";
 
 export const protect = async (req, res, next) => {
-    let token;          
+    let token;
 
     if(req.headers.authorization && req.headers.authorization.startsWith("Bearer")){
         //格式 Bearer token(1111)
@@ -16,13 +16,9 @@ export const protect = async (req, res, next) => {
 
     try{
         //解码 验证签名
-        const decode = jwt.verify(token, 'process.env.JWT_SECRET');
-        console.log(decode);
+        const decode = jwt.verify(token, "process.env.JWT_SECRET");
         const user = await User.findById(decode.id);
-        
-        if(!user) {
-            return next(new ErrorResponse(`No user found with this id`,404));
-        }
+        if(!user) return next(new ErrorResponse(`No user found with this id`,404));
 
         req.user = user;
 
