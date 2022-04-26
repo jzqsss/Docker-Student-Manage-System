@@ -4,7 +4,10 @@ import moment from "moment";
 import { createServer } from "http";
 import { Formatting } from "./Formatting";
 import { LabController } from "./LabController";
+import connectDB from "./config/db.js";
+//连接数据库
 
+connectDB();
 export class Server {
     static listen(port: number) {
         const app = express();
@@ -27,4 +30,3 @@ export class Server {
 }
 
 Server.listen(8085);
-    

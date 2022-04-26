@@ -1,11 +1,11 @@
 import express from "express";
 import { Controller } from "./Controller";
 import { exec } from "shelljs";
-
+import { login } from "./controllers/auth.js";
 export class LabController implements Controller {
-    private async ls(lab: string): Promise<{ 
+    private async ls(lab: string): Promise<{
         out: string;
-     }> {
+    }> {
         console.log("lab:" + lab);
         let cmd = "../../cxx/lab ls --lab " + lab;
 
@@ -16,9 +16,12 @@ export class LabController implements Controller {
         };
     }
 
-    private async start(lab: string, image: string): Promise<{ 
+    private async start(
+        lab: string,
+        image: string,
+    ): Promise<{
         out: string;
-     }> {
+    }> {
         let cmd = "../../cxx/lab start --lab " + lab + " --image " + image;
 
         let { stdout } = exec(cmd);
@@ -27,10 +30,10 @@ export class LabController implements Controller {
             out: stdout,
         };
     }
-    
-    private async stop(lab: string): Promise<{ 
+
+    private async stop(lab: string): Promise<{
         out: string;
-     }> {
+    }> {
         let cmd = "../../cxx/lab stop --lab " + lab;
 
         let { stdout } = exec(cmd);
@@ -56,6 +59,7 @@ export class LabController implements Controller {
             const result = await this.stop(lab);
             return res.send(result);
         });
+        app.post(`/api/auth/login`, login);
     }
 }
 
