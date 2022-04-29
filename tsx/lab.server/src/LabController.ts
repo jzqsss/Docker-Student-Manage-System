@@ -56,10 +56,10 @@ export class LabController implements Controller {
         app.post(`/start`, async (req, res) => {
             const { lab, image_url } = req.body;
             const image = image_url;
-            console.log(image_url, lab);
+            console.log(image, lab);
             // const result = await this.start(lab, image);
             // return res.send(result);
-            return res.send("result");
+            return res.send({ res: "success" });
         });
         app.post(`/stop`, async (req, res) => {
             const { lab } = req.body;

@@ -5,6 +5,7 @@ import "./PrivateScreen.css";
 import user from "../forms/containers";
 import { Table, Tag, Space } from "antd";
 import 'antd/dist/antd.css';
+import { post } from "superagent";
 
 
 
@@ -58,9 +59,15 @@ const PrivateScreen = () => {
     display_data();
   }, []);
   const selectHandler = async (object) => {
-    console.log(object);
+    console.log(object.image_url);
     try{
-      const res =  axios.post("http://localhost:10348/start")
+      const res =  axios.post(
+        "http://localhost:10348/start",
+        {
+          lab :"lab",
+          image_url:object.image_url,
+        }
+      )
 
     }catch (error) {
       setError("send failed ");
