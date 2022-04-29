@@ -6,54 +6,18 @@ import user from "../forms/containers";
 import { Table, Tag, Space } from "antd";
 import 'antd/dist/antd.css';
 
-const columns = [
-  { title: '镜像序号', dataIndex: 'name', key: 'name' },
-  { title: '镜像名称', dataIndex: 'age', key: 'age' },
-  { title: 'URL （image）', dataIndex: 'address', key: 'address' },
-  {
-    title: '备注',
-    dataIndex: '',
-    key: 'x',
-    render: () => <a>创建实例</a>,
-  },
-];
 
-const data = [
-  {
-    key: 1,
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    description: 'My name is John Brown, I am 32 years old, living in New York No. 1 Lake Park.',
-  },
-  {
-    key: 2,
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    description: 'My name is Jim Green, I am 42 years old, living in London No. 1 Lake Park.',
-  },
-  {
-    key: 3,
-    name: 'Not Expandable',
-    age: 29,
-    address: 'Jiangsu No. 1 Lake Park',
-    description: 'This not expandable',
-  },
-  {
-    key: 4,
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    description: 'My name is Joe Black, I am 32 years old, living in Sidney No. 1 Lake Park.',
-  },
-];
+
+
 
 
 
 
 const PrivateScreen = () => {
+
+  
   const [error, setError] = useState("");
+  const [data1, setData1] = useState("");
   const [privateData, setPrivateData] = useState("");
   const history = useHistory();
 
@@ -78,11 +42,43 @@ const PrivateScreen = () => {
     fetchPrivateDate();
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem('authToken');
-    history.push('/login')
-  }
+  useEffect(() => {
+    const display_data = async () => {
+      try {
+         const res = await axios.post("http://localhost:10348/api/auth/image");
+         const newData=res.data.map(item=>{return {key:item._id,...item}})
+         setData1(newData);
+         //console.log("newData:",newData);
+      } catch (error) {
 
+        setError("accquire data ");
+      }
+    };
+
+    display_data();
+  }, []);
+  const selectHandler = async (object) => {
+    console.log(object);
+    try{
+      const res =  axios.post("http://localhost:10348/start")
+
+    }catch (error) {
+      setError("send failed ");
+    }
+
+    
+
+  };
+  const columns = [
+    { title: '镜像名称', dataIndex: 'name', key: 'age' },
+    { title: 'URL （image）', dataIndex: 'image_url', key: 'url' },
+    {
+      title: '操作',
+      dataIndex: '',
+      key: 'x',
+      render: (object) => <a onClick={()=>{selectHandler( object )}}>创建实例</a>,
+    },
+  ];
   return error ? (
     <span className="error-message">{error}</span>
   ) : (
@@ -94,7 +90,7 @@ const PrivateScreen = () => {
       expandedRowRender: record => <p style={{ margin: 0 }}>{record.description}</p>,
       rowExpandable: record => record.name !== 'Not Expandable',
     }}
-    dataSource={data}
+    dataSource={data1}
   />
       
     // <div style={{ background:'green', color:'white' }}>

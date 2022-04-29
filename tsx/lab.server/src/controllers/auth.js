@@ -46,6 +46,7 @@ const sendToken = async (user, statusCode, res) => {
     })
 }
 
+
 // User.create({
 //     username:'jzqsss',
 //     password:'123456'

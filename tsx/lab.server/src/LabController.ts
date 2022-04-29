@@ -2,7 +2,10 @@ import express from "express";
 import { Controller } from "./Controller";
 import { exec } from "shelljs";
 import { login } from "./controllers/auth.js";
+import { display_image } from "./controllers/image_data.js";
 import { protect } from "./middleware/auth.js";
+
+import Image from "./models/Image.js";
 export class LabController implements Controller {
     private async ls(lab: string): Promise<{
         out: string;
@@ -51,9 +54,12 @@ export class LabController implements Controller {
             return res.send(result);
         });
         app.post(`/start`, async (req, res) => {
-            const { lab, image } = req.body;
-            const result = await this.start(lab, image);
-            return res.send(result);
+            const { lab, image_url } = req.body;
+            const image = image_url;
+            console.log(image_url, lab);
+            // const result = await this.start(lab, image);
+            // return res.send(result);
+            return res.send("result");
         });
         app.post(`/stop`, async (req, res) => {
             const { lab } = req.body;
@@ -66,7 +72,15 @@ export class LabController implements Controller {
                 success: true,
             });
         });
+        app.post(`/api/auth/image`, display_image);
     }
 }
 
 // localhost:8085/start
+
+// Image.create({
+//     name: "ubuntu 20.04",
+//     image_url: "ubuntu:20.04",
+//     description: "ubuntu版本为20.04",
+//     created_at: "itecgo",
+// });
