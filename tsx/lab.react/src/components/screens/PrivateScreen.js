@@ -61,14 +61,13 @@ const PrivateScreen = () => {
   }, []);
   const selectHandler = async (object) => {
     console.log(object.image_url);
+
     try{
-      const res =  axios.post(
-        "http://localhost:10348/start",
-        {
-          lab :"lab",
-          image_url:object.image_url,
-        }
-      )
+      
+      history.push("/input",object.image_url);
+
+      
+
 
     }catch (error) {
       setError("send failed ");
@@ -84,7 +83,7 @@ const PrivateScreen = () => {
       title: '操作',
       dataIndex: '',
       key: 'x',
-      render: ()=><Link to="/input">创建实例</Link>//(object) => <a onClick={()=>{selectHandler( object )}}>创建实例</a>,
+      render: (object) => <a onClick={()=>{selectHandler( object )}}>创建实例</a>,//()=><Link to="/input">创建实例</Link>
     },
   ];
   return error ? (

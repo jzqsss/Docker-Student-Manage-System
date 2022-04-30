@@ -1,14 +1,32 @@
 import { useState, useEffect } from "react";
-import "./LoginScreen.css";     
-const InputScreen = ({ history }) => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
-    const loginHandler = async (e) => {
-        
-    }
+import { useHistory,useLocation} from "react-router-dom";
+import "./LoginScreen.css";  
+import axios from "axios";   
+import PrivateScreen from "./PrivateScreen";
+const InputScreen = () => {
+    const [lab, setLab] = useState("");
 
-  
+    const [error, setError] = useState("");
+    const history = useHistory();
+    const location = useLocation();
+    const inputHandler = async (e) => {
+        try{
+          const res =  axios.post(
+            "http://localhost:10348/start",
+            {
+              lab :lab,
+              image_url:location.state,
+            }
+          )
+          history.push("/");
+        }catch(error){
+          setError("start容器失败");
+        }
+      
+    }
+    useEffect(() => {
+        console.log("history",location.state);
+    }, [])
     
   
     return (
@@ -24,6 +42,7 @@ const InputScreen = ({ history }) => {
               id="labName"
               placeholder="实例名称"
               tabIndex={1}
+              onChange={(e) => setLab(e.target.value)}
             />
           </div>
 
