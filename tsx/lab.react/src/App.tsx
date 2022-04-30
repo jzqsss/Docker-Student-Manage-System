@@ -10,9 +10,11 @@ import { LabClient } from './utils/LabClient';
 // Routing
 import PrivateRoute from "./components/routing/PrivateRoute";
 
+
 // Screens
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import LoginScreen from "./components/screens/LoginScreen";
+import ContainerScreen from "./components/screens/ContainerScreen";
 import PrivateScreen from "./components/screens/PrivateScreen";
 import InputScreen from "./components/screens/InputScreen";
 const App = () => {
@@ -23,6 +25,7 @@ const App = () => {
                     <PrivateRoute exact path="/" component={PrivateScreen} />
                     <Route exact path="/login" component={LoginScreen} />
                     <Route exact path="/input" component={InputScreen} />
+                    <Route exact path="/container" component={ContainerScreen} />
                 </Switch>
             </div>
         </Router>

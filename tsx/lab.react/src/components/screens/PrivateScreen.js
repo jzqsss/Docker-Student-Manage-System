@@ -76,6 +76,16 @@ const PrivateScreen = () => {
     
 
   };
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    history.push('/login')
+  }
+  const handleImageLibrary = () => {
+    history.push('/')
+  }
+  const handleContainerLibrary = () => {
+    history.push('/container')
+  }
   const columns = [
     { title: '镜像名称', dataIndex: 'name', key: 'age' },
     { title: 'URL （image）', dataIndex: 'image_url', key: 'url' },
@@ -83,22 +93,42 @@ const PrivateScreen = () => {
       title: '操作',
       dataIndex: '',
       key: 'x',
-      render: (object) => <a onClick={()=>{selectHandler( object )}}>创建实例</a>,//()=><Link to="/input">创建实例</Link>
+      render: (object) => {
+        let name = "hello world";
+
+        return (
+          <div>
+            <a onClick={() => { selectHandler(object); } }>创建实例</a>
+            &nbsp;&nbsp; {name}
+            <a onClick={() => { selectHandler(object); } }>Start</a>
+            &nbsp;&nbsp;
+            <a onClick={() => { selectHandler(object); } }>Stop</a>
+            &nbsp;&nbsp;
+            <a onClick={() => { selectHandler(object); } }>Remove</a>
+          </div>
+        );
+      },
     },
   ];
   return error ? (
     <span className="error-message">{error}</span>
   ) : (
     
-        
-    <Table
+    <div>
+      <button onClick={handleImageLibrary}>镜像库</button>
+      <button onClick={handleContainerLibrary}>我的实验</button>
+      <Table
     columns={columns}
     expandable={{
       expandedRowRender: record => <p style={{ margin: 0 }}>{record.description}</p>,
       rowExpandable: record => record.name !== 'Not Expandable',
     }}
     dataSource={data1}
-  />
+    />
+    <button onClick={handleLogout}>logout</button>
+    </div>
+    
+  
       
     // <div style={{ background:'green', color:'white' }}>
     //   {privateData}
