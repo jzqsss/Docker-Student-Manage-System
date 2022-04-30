@@ -57,9 +57,8 @@ export class LabController implements Controller {
             const { lab, image_url } = req.body;
             const image = image_url;
             console.log(image, lab);
-            // const result = await this.start(lab, image);
-            // return res.send(result);
-            return res.send({ res: "success" });
+            const result = await this.start(lab, image);
+            return res.send(result);
         });
         app.post(`/stop`, async (req, res) => {
             const { lab } = req.body;

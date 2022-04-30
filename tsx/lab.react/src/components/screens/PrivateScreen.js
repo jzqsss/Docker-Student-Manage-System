@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useHistory} from "react-router-dom";
 import axios from "axios";
 import "./PrivateScreen.css";
+import { Link } from "react-router-dom";
 import user from "../forms/containers";
 import { Table, Tag, Space } from "antd";
 import 'antd/dist/antd.css';
@@ -83,7 +84,7 @@ const PrivateScreen = () => {
       title: '操作',
       dataIndex: '',
       key: 'x',
-      render: (object) => <a onClick={()=>{selectHandler( object )}}>创建实例</a>,
+      render: ()=><Link to="/input">创建实例</Link>//(object) => <a onClick={()=>{selectHandler( object )}}>创建实例</a>,
     },
   ];
   return error ? (
