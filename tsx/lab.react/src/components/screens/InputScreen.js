@@ -4,14 +4,16 @@ const InputScreen = ({ history }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
-  
+    const loginHandler = async (e) => {
+        
+    }
 
   
     
   
     return (
       <div className="login-screen">
-        <form  className="login-screen__form">
+        <form  onSubmit={inputHandler}className="login-screen__form">
           <h3 className="login-screen__title">实例配置信息</h3>
           {error && <span className="error-message">{error}</span>}
           <div className="form-group">
