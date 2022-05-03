@@ -5,17 +5,41 @@ import axios from "axios";
 import PrivateScreen from "./PrivateScreen";
 const InputScreen = () => {
     const [lab, setLab] = useState("");
-
     const [error, setError] = useState("");
     const history = useHistory();
     const location = useLocation();
+    const [privateData, setPrivateData] = useState("");
+    useEffect(() => { 
+      const fetchPrivateDate = async () => {
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          },
+        };
+  
+        try {
+          const { data } = await axios.get("http://localhost:10348/api/auth/private", config);
+          setPrivateData(data);
+        } catch (error) {
+          localStorage.removeItem("authToken");
+          setError("You are not authorized please login");
+        }
+      };
+      fetchPrivateDate();
+    }, []);
+
     const inputHandler = async (e) => {
         try{
           const res =  axios.post(
-            "http://localhost:10348/start",
+            "http://localhost:10348/api/auth/start",
             {
               lab :lab,
               image_url:location.state,
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+              },
             }
           )
           history.push("/");
