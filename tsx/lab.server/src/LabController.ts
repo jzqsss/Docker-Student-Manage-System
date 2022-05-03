@@ -3,6 +3,7 @@ import { Controller } from "./Controller";
 import { exec } from "shelljs";
 import { login } from "./controllers/auth.js";
 import { display_image } from "./controllers/image_data.js";
+import { display_container } from "./controllers/container_data.js";
 import { protect } from "./middleware/auth.js";
 import { docker_start } from "./controllers/docker.js";
 import ErrorResponse from "./utils/errorResponse.js";
@@ -52,6 +53,7 @@ export class LabController implements Controller {
             });
         });
         app.post(`/api/auth/image`, display_image);
+        app.post(`/api/auth/container`, display_container);
     }
 }
 

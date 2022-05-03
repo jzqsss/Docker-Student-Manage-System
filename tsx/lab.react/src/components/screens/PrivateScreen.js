@@ -118,14 +118,14 @@ const PrivateScreen = () => {
       <button onClick={handleImageLibrary}>镜像库</button>
       <button onClick={handleContainerLibrary}>我的实验</button>
       <Table
-    columns={columns}
-    expandable={{
-      expandedRowRender: record => <p style={{ margin: 0 }}>{record.description}</p>,
-      rowExpandable: record => record.name !== 'Not Expandable',
-    }}
-    dataSource={data1}
-    />
-    <button onClick={handleLogout}>logout</button>
+        columns={columns}
+        expandable={{
+          expandedRowRender: record => <p style={{ margin: 0 }}>{record.description}</p>,
+          rowExpandable: record => record.name !== 'Not Expandable',
+        }}
+        dataSource={data1}
+      />
+      <button onClick={handleLogout}>logout</button>
     </div>
     
   
