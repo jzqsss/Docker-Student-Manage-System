@@ -99,12 +99,6 @@ const PrivateScreen = () => {
         return (
           <div>
             <a onClick={() => { selectHandler(object); } }>创建实例</a>
-            &nbsp;&nbsp; {name}
-            <a onClick={() => { selectHandler(object); } }>Start</a>
-            &nbsp;&nbsp;
-            <a onClick={() => { selectHandler(object); } }>Stop</a>
-            &nbsp;&nbsp;
-            <a onClick={() => { selectHandler(object); } }>Remove</a>
           </div>
         );
       },

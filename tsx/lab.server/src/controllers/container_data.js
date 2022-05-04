@@ -19,9 +19,9 @@ export const display_container = async (req, res, next) => {
         
         const username = user.username;
         const data=await Container.find({username:username}).select("+password");
-        console.log("data",data);
+        console.log("data",data);        
         res.status(200).json(data)
-
+        console.log("data11",data);
     }catch (error){
        next(error);
     }

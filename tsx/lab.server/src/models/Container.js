@@ -17,6 +17,10 @@ const containerSchema = new mongoose.Schema({
     container_id:{
         type: String,
         required: [true, '请提供容器ID']
+    },
+    container_status:{
+        type: String,
+        required: [true, '请提供容器状态']
     }
 });
 

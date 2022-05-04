@@ -48,6 +48,6 @@ const sendToken = async (user, statusCode, res) => {
 
 
 // User.create({
-//     username:'jzqsss',
+//     username:'itecgo',
 //     password:'123456'
 // })

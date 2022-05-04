@@ -21,6 +21,7 @@ const ContainerScreen = () => {
   const [error, setError] = useState("");
   const [data1, setData1] = useState("");
   const [privateData, setPrivateData] = useState("");
+
   const history = useHistory();
 
   useEffect(() => {
@@ -32,6 +33,7 @@ const ContainerScreen = () => {
         },
       };
       try {
+          console.log("11");
          const res = await axios.post("http://localhost:10348/api/auth/container",config);
          const newData=res.data.map(item=>{return {key:item._id,...item}})
          setData1(newData);
@@ -56,25 +58,47 @@ const ContainerScreen = () => {
   }
   const selectHandler = async (object) => {
   }
+  const stopHandler = async (object) => {  
+    try{
+      //console.log(object);
+        axios.post(
+        "http://localhost:10348/api/auth/stop",
+        {
+          container_id :object.container_id
+        }
+      )
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+      };
+      const stop = await axios.post("http://localhost:10348/api/auth/container",config);
+      const newData=stop.data.map(item=>{return {key:item._id,...item}})
+      setData1(newData);
+
+    }catch (error) {
+      setError("container stop failed ");
+    }
+  }
   const columns = [
     { title: '实验名称', dataIndex: 'container_name', key: 'age' },
-    { title: '镜像名称', dataIndex: 'image_url', key: 'url' },
+    { title: '实验名称', dataIndex: 'image_url', key: 'url' },
+    { title: '实验状态', dataIndex: 'container_status', key: 'status' },
     {
       title: '操作',
       dataIndex: '',
       key: 'x',
       render: (object) => {
-        let name = "hello world";
-
         return (
           <div>
-            <a onClick={() => { selectHandler(object); } }>创建实例</a>
-            &nbsp;&nbsp; {name}
-            <a onClick={() => { selectHandler(object); } }>Start</a>
+            <a onClick={() => { selectHandler(object); } }>启动</a>
             &nbsp;&nbsp;
-            <a onClick={() => { selectHandler(object); } }>Stop</a>
+            <a onClick={() => { stopHandler(object); } }>暂停</a>
             &nbsp;&nbsp;
-            <a onClick={() => { selectHandler(object); } }>Remove</a>
+            <a onClick={() => { selectHandler(object); } }>关闭</a>
+            &nbsp;&nbsp;
+            <a onClick={() => { selectHandler(object); } }>删除</a>
           </div>
         );
       },

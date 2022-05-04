@@ -5,7 +5,7 @@ import { login } from "./controllers/auth.js";
 import { display_image } from "./controllers/image_data.js";
 import { display_container } from "./controllers/container_data.js";
 import { protect } from "./middleware/auth.js";
-import { docker_start } from "./controllers/docker.js";
+import { docker_start, docker_stop } from "./controllers/docker.js";
 import ErrorResponse from "./utils/errorResponse.js";
 import Image from "./models/Image.js";
 export class LabController implements Controller {
@@ -41,11 +41,8 @@ export class LabController implements Controller {
             return res.send(result);
         });
         app.post(`/api/auth/start`, docker_start);
-        app.post(`/stop`, async (req, res) => {
-            const { lab } = req.body;
-            const result = await this.stop(lab);
-            return res.send(result);
-        });
+        app.post(`/api/auth/stop`, docker_stop);
+
         app.post(`/api/auth/login`, login);
         app.get(`/api/auth/private`, protect, (req, res) => {
             res.status(200).json({
