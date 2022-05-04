@@ -91,6 +91,30 @@ int main(int argc, char *argv[])
         string result = exec(input);
         cout << result;
     }
+    else if (action == "suspand")
+    {
+        auto lab = program.get<std::string>("--lab");
+
+        string input = "docker pause " + lab;
+        string result = exec(input);
+        cout << result;
+    }
+    else if (action == "unsuspand")
+    {
+        auto lab = program.get<std::string>("--lab");
+
+        string input = "docker unpause " + lab;
+        string result = exec(input);
+        cout << result;
+    }
+    else if (action == "remove")
+    {
+        auto lab = program.get<std::string>("--lab");
+
+        string input = "docker rm " + lab;
+        string result = exec(input);
+        cout << result;
+    }
     else
     {
         cout << "请输入正确的参数";
