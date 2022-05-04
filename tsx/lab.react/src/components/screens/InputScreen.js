@@ -32,7 +32,7 @@ const InputScreen = () => {
     const inputHandler = async (e) => {
         try{
           const res =  axios.post(
-            "http://localhost:10348/api/auth/start",
+            "http://localhost:10348/api/auth/run",
             {
               lab :lab,
               image_url:location.state,

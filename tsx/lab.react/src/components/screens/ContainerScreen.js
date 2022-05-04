@@ -58,6 +58,30 @@ const ContainerScreen = () => {
   }
   const selectHandler = async (object) => {
   }
+  const startHandler = async (object) => {
+    console.log("11");
+    try{
+      //console.log(object);
+        axios.post(
+        "http://localhost:10348/api/auth/start",
+        {
+          container_id :object.container_id
+        }
+      )
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+      };
+      const start = await axios.post("http://localhost:10348/api/auth/container",config);
+      const newData=start.data.map(item=>{return {key:item._id,...item}})
+      setData1(newData);
+
+    }catch (error) {
+      setError("container stop failed ");
+    }
+  }
   const stopHandler = async (object) => {  
     try{
       //console.log(object);
@@ -92,7 +116,7 @@ const ContainerScreen = () => {
       render: (object) => {
         return (
           <div>
-            <a onClick={() => { selectHandler(object); } }>启动</a>
+            <a onClick={() => { startHandler(object); } }>启动</a>
             &nbsp;&nbsp;
             <a onClick={() => { stopHandler(object); } }>暂停</a>
             &nbsp;&nbsp;

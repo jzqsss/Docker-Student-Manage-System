@@ -3,7 +3,7 @@ import User from "../models/User.js";
 import ErrorResponse from "../utils/errorResponse.js";
 import { exec } from "shelljs";
 import Container from "../models/Container.js";
-export const docker_start=async (req, res,next) => {
+export const docker_run=async (req, res,next) => {
     let token;
     console.log(req.body);
     if(req.body.headers.Authorization && req.body.headers.Authorization.startsWith("Bearer")){
@@ -24,7 +24,7 @@ export const docker_start=async (req, res,next) => {
         if(!user) return next(new ErrorResponse(`No user found with this id`,404));        
         const username = user.username;        
         //return res.send({ res: "success" });
-        let cmd = "../../cxx/lab start --lab " + lab + " --image " + image;
+        let cmd = "../../cxx/lab run --lab " + lab + " --image " + image;
         let { stdout } = exec(cmd);
         console.log(stdout);
         Container.create({
@@ -61,5 +61,27 @@ export const docker_stop=async (req, res,next) => {
     }catch (e){
         console.log("error",e);
         return next(new ErrorResponse('stop failure'));
+    }
+}
+
+export const docker_start=async (req, res,next) => {
+    try{
+        //解码 验证签名
+        const { container_id } = req.body;    
+        let cmd = "../../cxx/lab start --lab " + container_id;
+        let { stdout } = exec(cmd);
+        console.log("stop");
+        Container.updateOne(
+            {container_id: container_id},
+            {container_status: '运行'},
+            function(err, docs){
+                if(err) console.log(err);
+                console.log('更改成功：' + docs);
+            }
+        );      
+        res.json({res:'success'});
+    }catch (e){
+        console.log("error",e);
+        return next(new ErrorResponse('start failure'));
     }
 }
