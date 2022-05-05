@@ -18,10 +18,8 @@ export const display_container = async (req, res, next) => {
         if(!user) return next(new ErrorResponse(`No user found with this id`,404));
         
         const username = user.username;
-        const data=await Container.find({username:username}).select("+password");
-        console.log("data",data);        
+        const data=await Container.find({username:username}).select("+password");     
         res.status(200).json(data)
-        console.log("data11",data);
     }catch (error){
        next(error);
     }

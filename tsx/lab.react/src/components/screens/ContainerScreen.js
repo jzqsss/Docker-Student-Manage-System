@@ -39,7 +39,8 @@ const ContainerScreen = () => {
          setData1(newData);
          //console.log("newData:",newData);
       } catch (error) {
-
+        localStorage.removeItem("authToken");
+        history.push('/login');
         setError("accquire data error");
       }
     };
@@ -56,8 +57,7 @@ const ContainerScreen = () => {
   const handleContainerLibrary = () => {
     history.push('/container')
   }
-  const selectHandler = async (object) => {
-  }
+
   const startHandler = async (object) => {
     console.log("11");
     try{
@@ -105,6 +105,75 @@ const ContainerScreen = () => {
       setError("container stop failed ");
     }
   }
+  const suspandHandler = async (object) => {  
+    try{
+      //console.log(object);
+        axios.post(
+        "http://localhost:10348/api/auth/suspand",
+        {
+          container_id :object.container_id
+        }
+      )
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+      };
+      const suspand = await axios.post("http://localhost:10348/api/auth/container",config);
+      const newData=suspand.data.map(item=>{return {key:item._id,...item}})
+      setData1(newData);
+
+    }catch (error) {
+      setError("container suspand failed ");
+    }
+  }
+  const unsuspandHandler = async (object) => {  
+    try{
+      //console.log(object);
+        axios.post(
+        "http://localhost:10348/api/auth/unsuspand",
+        {
+          container_id :object.container_id
+        }
+      )
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+      };
+      const unsuspand = await axios.post("http://localhost:10348/api/auth/container",config);
+      const newData=unsuspand.data.map(item=>{return {key:item._id,...item}})
+      setData1(newData);
+
+    }catch (error) {
+      setError("container unsuspand failed ");
+    }
+  }
+  const removeHandler = async (object) => {  
+    try{
+      //console.log(object);
+        axios.post(
+        "http://localhost:10348/api/auth/remove",
+        {
+          container_id :object.container_id
+        }
+      )
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+      };
+      const remove = await axios.post("http://localhost:10348/api/auth/container",config);
+      const newData=remove.data.map(item=>{return {key:item._id,...item}})
+      setData1(newData);
+
+    }catch (error) {
+      setError("container stop failed ");
+    }
+  }
   const columns = [
     { title: '实验名称', dataIndex: 'container_name', key: 'age' },
     { title: '实验名称', dataIndex: 'image_url', key: 'url' },
@@ -118,11 +187,13 @@ const ContainerScreen = () => {
           <div>
             <a onClick={() => { startHandler(object); } }>启动</a>
             &nbsp;&nbsp;
-            <a onClick={() => { stopHandler(object); } }>暂停</a>
+            <a onClick={() => { stopHandler(object); } }>停止</a>
             &nbsp;&nbsp;
-            <a onClick={() => { selectHandler(object); } }>关闭</a>
+            <a onClick={() => { suspandHandler(object); } }>挂起</a>
             &nbsp;&nbsp;
-            <a onClick={() => { selectHandler(object); } }>删除</a>
+            <a onClick={() => { unsuspandHandler(object); } }>取消挂起</a>
+            &nbsp;&nbsp;
+            <a onClick={() => { removeHandler(object); } }>删除</a>
           </div>
         );
       },

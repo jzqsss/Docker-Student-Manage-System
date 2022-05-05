@@ -65,16 +65,9 @@ const PrivateScreen = () => {
     try{
       
       history.push("/input",object.image_url);
-
-      
-
-
     }catch (error) {
       setError("send failed ");
     }
-
-    
-
   };
   const handleLogout = () => {
     localStorage.removeItem('authToken');

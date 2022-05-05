@@ -51,7 +51,7 @@ export const docker_stop=async (req, res,next) => {
         console.log("stop");
         Container.updateOne(
             {container_id: container_id},
-            {container_status: '暂停'},
+            {container_status: '停止'},
             function(err, docs){
                 if(err) console.log(err);
                 console.log('更改成功：' + docs);
@@ -83,5 +83,67 @@ export const docker_start=async (req, res,next) => {
     }catch (e){
         console.log("error",e);
         return next(new ErrorResponse('start failure'));
+    }
+}
+
+export const docker_suspand=async (req, res,next) => { 
+    try{
+        //解码 验证签名
+        const { container_id } = req.body;    
+        let cmd = "../../cxx/lab suspand --lab " + container_id;
+        let { stdout } = exec(cmd);
+        Container.updateOne(
+            {container_id: container_id},
+            {container_status: '挂起'},
+            function(err, docs){
+                if(err) console.log(err);
+                console.log('更改成功：' + docs);
+            }
+        );      
+        res.json({res:'success'});
+    }catch (e){
+        console.log("error",e);
+        return next(new ErrorResponse('suspand failure'));
+    }
+}
+
+export const docker_unsuspand=async (req, res,next) => {
+    try{
+        //解码 验证签名
+        const { container_id } = req.body;    
+        let cmd = "../../cxx/lab unsuspand --lab " + container_id;
+        let { stdout } = exec(cmd);
+        Container.updateOne(
+            {container_id: container_id},
+            {container_status: '运行'},
+            function(err, docs){
+                if(err) console.log(err);
+                console.log('更改成功：' + docs);
+            }
+        );      
+        res.json({res:'success'});
+    }catch (e){
+        console.log("error",e);
+        return next(new ErrorResponse('unsuspand failure'));
+    }
+}
+
+export const docker_remove=async (req, res,next) => {
+    try{
+        //解码 验证签名
+        const { container_id } = req.body;    
+        let cmd = "../../cxx/lab remove --lab " + container_id;
+        let { stdout } = exec(cmd);
+        Container.findOneAndDelete(
+            {container_id: container_id},
+            function(err, docs){
+                if(err) console.log(err);
+                console.log('删除成功：' + docs);
+            }
+        );      
+        res.json({res:'success'});
+    }catch (e){
+        console.log("error",e);
+        return next(new ErrorResponse('delete failure'));
     }
 }

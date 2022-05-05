@@ -23,7 +23,9 @@ const InputScreen = () => {
           setPrivateData(data);
         } catch (error) {
           localStorage.removeItem("authToken");
+          history.push('/login');
           setError("You are not authorized please login");
+
         }
       };
       fetchPrivateDate();
@@ -48,9 +50,7 @@ const InputScreen = () => {
         }
       
     }
-    useEffect(() => {
-        console.log("history",location.state);
-    }, [])
+
     
   
     return (
