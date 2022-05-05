@@ -54,11 +54,7 @@ export class LabController implements Controller {
         app.post(`/api/auth/unsuspand`, docker_unsuspand);
         app.post(`/api/auth/remove`, docker_remove);
         app.post(`/api/auth/login`, login);
-        app.get(`/api/auth/private`, protect, (req, res) => {
-            res.status(200).json({
-                success: true,
-            });
-        });
+        app.get(`/api/auth/private`, protect);
         app.post(`/api/auth/image`, display_image);
         app.post(`/api/auth/container`, display_container);
     }

@@ -20,9 +20,13 @@ export const protect = async (req, res, next) => {
         const user = await User.findById(decode.id);
         if(!user) return next(new ErrorResponse(`No user found with this id`,404));
 
-        req.user = user;
 
-        next(); //中间件
+
+       
+        res.status(200).json({
+            username: user.username,
+        });
+        
     }catch (e){
         return next(new ErrorResponse(`No authorization to access this route`, 401));
     }

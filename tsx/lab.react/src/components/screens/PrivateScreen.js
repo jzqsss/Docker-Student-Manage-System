@@ -20,7 +20,7 @@ const PrivateScreen = () => {
   
   const [error, setError] = useState("");
   const [data1, setData1] = useState("");
-  const [privateData, setPrivateData] = useState("");
+  const [username, setUsername] = useState("");
   const history = useHistory();
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const PrivateScreen = () => {
 
       try {
         const { data } = await axios.get("http://localhost:10348/api/auth/private", config);
-        setPrivateData(data);
+        setUsername(data.username);
         
       } catch (error) {
         localStorage.removeItem("authToken");
@@ -101,7 +101,11 @@ const PrivateScreen = () => {
     <span className="error-message">{error}</span>
   ) : (
     
+
+    
     <div>
+      <div><label>学生信息:{username}</label></div>
+      
       <button onClick={handleImageLibrary}>镜像库</button>
       <button onClick={handleContainerLibrary}>我的实验</button>
       <Table
