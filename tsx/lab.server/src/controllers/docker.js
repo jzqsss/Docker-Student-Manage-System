@@ -3,6 +3,7 @@ import User from "../models/User.js";
 import ErrorResponse from "../utils/errorResponse.js";
 import { exec } from "shelljs";
 import Container from "../models/Container.js";
+import Image from "../models/Image.js";
 export const docker_run=async (req, res,next) => {
     let token;
     console.log(req.body);
@@ -147,3 +148,12 @@ export const docker_remove=async (req, res,next) => {
         return next(new ErrorResponse('delete failure'));
     }
 }
+
+
+// Image.findOneAndDelete(
+//     {name: "ubuntu 20.04"},
+//     function(err, docs){
+//         if(err) console.log(err);
+//         console.log('删除成功：' + docs);
+//     }
+// );

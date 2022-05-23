@@ -3,8 +3,8 @@ import { useHistory} from "react-router-dom";
 import axios from "axios";
 import "./PrivateScreen.css";
 import { Link } from "react-router-dom";
-import user from "../forms/containers";
-import { Table, Tag, Space } from "antd";
+
+import { Table, Tag, Space, Button , Radio} from "antd";
 import 'antd/dist/antd.css';
 import { post } from "superagent";
 
@@ -22,7 +22,7 @@ const PrivateScreen = () => {
   const [data1, setData1] = useState("");
   const [username, setUsername] = useState("");
   const history = useHistory();
-
+  const [page, setPage] = useState('image');
   useEffect(() => {
     const fetchPrivateDate = async () => {
       const config = {
@@ -73,11 +73,18 @@ const PrivateScreen = () => {
     localStorage.removeItem('authToken');
     history.push('/login')
   }
-  const handleImageLibrary = () => {
-    history.push('/')
-  }
-  const handleContainerLibrary = () => {
-    history.push('/container')
+
+  const handleLibrary=(value) => {
+    setPage(value);
+    switch(value){
+      case 'image':{history.push('/');break;}
+      case 'container':{history.push('/container');break;}
+      default : break;
+    }
+
+    
+
+
   }
   const columns = [
     { title: '镜像名称', dataIndex: 'name', key: 'age' },
@@ -104,10 +111,17 @@ const PrivateScreen = () => {
 
     
     <div>
-      <div><label>学生信息:{username}</label></div>
+      <div className="information">学生信息:{username}</div>
       
-      <button onClick={handleImageLibrary}>镜像库</button>
-      <button onClick={handleContainerLibrary}>我的实验</button>
+      {/* <button onClick={handleImageLibrary}>镜像库</button> */}
+      <div className="select">
+      <Radio.Group value={page} onChange={(e) => handleLibrary(e.target.value)}>
+        <Radio.Button value="image" >镜像库</Radio.Button>
+        <Radio.Button value="container">我的实验</Radio.Button>
+      </Radio.Group>
+      </div>
+      
+      {/* <button onClick={handleContainerLibrary}>我的实验</button> */}
       <Table
         columns={columns}
         expandable={{
@@ -116,7 +130,7 @@ const PrivateScreen = () => {
         }}
         dataSource={data1}
       />
-      <button onClick={handleLogout}>logout</button>
+      <Button className="logout" onClick={handleLogout}>logout</Button>
     </div>
     
   

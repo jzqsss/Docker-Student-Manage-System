@@ -3,8 +3,8 @@ import { useHistory} from "react-router-dom";
 import axios from "axios";
 import "./ContainerScreen.css";
 import { Link } from "react-router-dom";
-import user from "../forms/containers";
-import { Table, Tag, Space } from "antd";
+
+import { Table, Tag, Space ,Button , Radio} from "antd";
 import 'antd/dist/antd.css';
 import { post } from "superagent";
 
@@ -21,7 +21,7 @@ const ContainerScreen = () => {
   const [error, setError] = useState("");
   const [data1, setData1] = useState("");
   const [username, setUsername] = useState("");
-
+  const [page, setPage] = useState('container');
   const history = useHistory();
   useEffect(() => {
     const fetchPrivateDate = async () => {
@@ -76,7 +76,14 @@ const ContainerScreen = () => {
   const handleContainerLibrary = () => {
     history.push('/container')
   }
-
+  const handleLibrary=(value) => {
+    setPage(value);
+    switch(value){
+      case 'image':{history.push('/');break;}
+      case 'container':{history.push('/container');break;}
+      default : break;
+    }
+  }
   const startHandler = async (object) => {
     console.log("11");
     try{
@@ -195,7 +202,7 @@ const ContainerScreen = () => {
   }
   const columns = [
     { title: '实验名称', dataIndex: 'container_name', key: 'age' },
-    { title: '实验名称', dataIndex: 'image_url', key: 'url' },
+    { title: '镜像名称', dataIndex: 'image_url', key: 'url' },
     { title: '实验状态', dataIndex: 'container_status', key: 'status' },
     {
       title: '操作',
@@ -219,12 +226,23 @@ const ContainerScreen = () => {
     },
   ];
 
+
+  const jumpTo = ()=> {
+    const w = window.open('_black') //这里是打开新窗口
+    let url = 'http://localhost:3658/ssh/host/127.0.0.1'
+    w.location.href = url //这样就可以跳转了
+  }
+
   return (
     
     <div>
-      <div><label>学生信息:{username}</label></div>
-      <button onClick={handleImageLibrary}>镜像库</button>
-      <button onClick={handleContainerLibrary}>我的实验</button>   
+      <div className="information">学生信息:{username}</div>
+      <div className="select">
+      <Radio.Group  value={page} onChange={(e) => handleLibrary(e.target.value)}>
+        <Radio.Button value="image" >镜像库</Radio.Button>
+        <Radio.Button value="container">我的实验</Radio.Button>
+      </Radio.Group> 
+      </div>
       <Table
         columns={columns}
         expandable={{
@@ -233,7 +251,12 @@ const ContainerScreen = () => {
         }}
         dataSource={data1}
       />   
-      <button onClick={handleLogout}>logout</button>
+
+       
+
+        <Button className="logout" onClick={handleLogout}>logout</Button>
+
+      <Button className="connect" onClick={()=>{jumpTo()}}>连接服务器</Button>
     </div>
     
   

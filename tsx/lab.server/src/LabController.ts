@@ -14,7 +14,7 @@ import {
     docker_remove,
 } from "./controllers/docker.js";
 import ErrorResponse from "./utils/errorResponse.js";
-import Image from "./models/Image.js";
+
 export class LabController implements Controller {
     private async ls(lab: string): Promise<{
         out: string;
@@ -63,8 +63,8 @@ export class LabController implements Controller {
 // localhost:8085/start
 
 // Image.create({
-//     name: "ubuntu 20.04",
-//     image_url: "ubuntu:20.04",
-//     description: "ubuntu版本为20.04",
+//     name: "ubuntu 18.04",
+//     image_url: "ubuntu:18.04",
+//     description: "ubuntu版本为18.04",
 //     created_at: "itecgo",
 // });

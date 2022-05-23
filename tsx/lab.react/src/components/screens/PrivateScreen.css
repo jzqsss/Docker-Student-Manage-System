@@ -1,0 +1,14 @@
+.information {
+    float: right;
+    margin-right: 20px;
+    font-size: 18px;
+    color: #1890FF;
+}
+.logout {
+    position: absolute;
+    left: 5px;
+    bottom: 5px;
+}
+.select {
+    margin: 20px;
+}
